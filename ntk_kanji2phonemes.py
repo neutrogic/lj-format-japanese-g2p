@@ -1,3 +1,4 @@
+import sys
 import re
 from pyopenjtalk import g2p
 import tkinter.filedialog as fd
@@ -56,28 +57,29 @@ class kanji2phone():
 
             line = phones[i]
 
-            new_line = re.sub('pau', '.', line
-                             ).sub('sh', 'sy', line
-                             ).sub('ch', 'cy', line
-                             ).sub('j', 'jy', line
-                             ).sub('cl', 'Q', line
-                             ).sub('k i', 'kyi', line
-                             ).sub('g i', 'gyi', line
-                             ).sub('t i', 'tyi', line
-                             ).sub('d i', 'dyi', line
-                             ).sub('n i', 'nyi', line
-                             ).sub('h i', 'hyi', line
-                             ).sub('b i', 'byi', line
-                             ).sub('p i', 'pyi', line
-                             ).sub('m i', 'myi', line
-                             ).sub('r i', 'ryi', line
-                             ).sub('I', '', line
-                             ).sub('U', '', line
-                             ).sub(' ', '', line)
+            new_line = re.sub('pau', ',', line)
+            new_line = re.sub('sh', 'sy', new_line)
+            new_line = re.sub('ch', 'cy', new_line)
+            new_line = re.sub('j', 'jy', new_line)
+            new_line = re.sub('cl', 'Q', new_line)
+            new_line = re.sub('k i', 'kyi', new_line)
+            new_line = re.sub('g i', 'gyi', new_line)
+            new_line = re.sub('t i', 'tyi', new_line)
+            new_line = re.sub('d i', 'dyi', new_line)
+            new_line = re.sub('n i', 'nyi', new_line)
+            new_line = re.sub('h i', 'hyi', new_line)
+            new_line = re.sub('b i', 'byi', new_line)
+            new_line = re.sub('p i', 'pyi', new_line)
+            new_line = re.sub('m i', 'myi', new_line)
+            new_line = re.sub('r i', 'ryi', new_line)
+            new_line = re.sub('I', '', new_line)
+            new_line = re.sub('U', '', new_line)
+            new_line = re.sub(' ', '', new_line)
+            new_line += '.'
 
             conv_phones.append(new_line)
 
-            return conv_phones
+        return conv_phones
     
     def rebuild_files(files, conv_phones):
         
@@ -110,7 +112,7 @@ def main():
     
     file = kanji2phone.read_file(fd.askopenfilename())
     phones, files = kanji2phone.split_delimiter(file)
-    if sys.argv.lower() == yes or y:
+    if sys.argv[-1].lower() == 'yes' or 'y':
         conv_phones = kanji2phone.convert_phones_talqu(phones)
     else:
         conv_phones = kanji2phone.convert_phones(phones)
