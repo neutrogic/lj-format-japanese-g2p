@@ -45,6 +45,39 @@ class kanji2phone():
             conv_phones.append(re.sub('pau', '.', phones[i]))
         
         return conv_phones
+
+    def convert_phones_talqu(phones):
+
+        conv_phones = []
+        #We're converting phonemes in the format for TalQu, a voice synthesizer by Haruqa.
+        #音素の転換、HaruqaのTalQuのためにフォーマットしている。
+
+        for i in range(len(phones)):
+
+            line = phones[i]
+
+            new_line = re.sub('pau', '.', line
+                             ).sub('sh', 'sy', line
+                             ).sub('ch', 'cy', line
+                             ).sub('j', 'jy', line
+                             ).sub('cl', 'Q', line
+                             ).sub('k i', 'kyi', line
+                             ).sub('g i', 'gyi', line
+                             ).sub('t i', 'tyi', line
+                             ).sub('d i', 'dyi', line
+                             ).sub('n i', 'nyi', line
+                             ).sub('h i', 'hyi', line
+                             ).sub('b i', 'byi', line
+                             ).sub('p i', 'pyi', line
+                             ).sub('m i', 'myi', line
+                             ).sub('r i', 'ryi', line
+                             ).sub('I', '', line
+                             ).sub('U', '', line
+                             ).sub(' ', '', line)
+
+            conv_phones.append(new_line)
+
+            return conv_phones
     
     def rebuild_files(files, conv_phones):
         
@@ -77,7 +110,10 @@ def main():
     
     file = kanji2phone.read_file(fd.askopenfilename())
     phones, files = kanji2phone.split_delimiter(file)
-    conv_phones = kanji2phone.convert_phones(phones)
+    if sys.argv.lower() == yes or y:
+        conv_phones = kanji2phone.convert_phones_talqu(phones)
+    else:
+        conv_phones = kanji2phone.convert_phones(phones)
     new_text = kanji2phone.rebuild_files(files, conv_phones)
     kanji2phone.export_file(new_text)
 
